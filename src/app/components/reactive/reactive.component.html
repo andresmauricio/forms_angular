@@ -1,6 +1,6 @@
 <h4>Formularios <small> Reactivo </small></h4>
 <hr>
-<form autocomplete="off">
+<form autocomplete="off" [formGroup]="formReactive" (ngSubmit)="save()">
 
   <div>
 
@@ -10,7 +10,12 @@
 
         <input class="form-control"
                type="text"
-               placeholder="Nombre">
+               placeholder="Nombre"
+               formControlName="firstName"
+               [class.is-invalid]="validFirstName">
+               <small  *ngIf="validFirstName"
+               class="from-text text-danger">Ingrese 5 letras
+      </small>
       </div>
     </div>
 
@@ -20,7 +25,12 @@
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               placeholder="Apellido"
+               formControlName="lastName"
+               [class.is-invalid]="validLastName">
+               <small  *ngIf="validLastName"
+               class="from-text text-danger">Ingrese 5 letras
+      </small>
       </div>
     </div>
 
@@ -32,7 +42,107 @@
 
       <input class="form-control"
              type="email"
-             placeholder="Correo electrónico">
+             placeholder="Correo electrónico"
+             formControlName="email"
+             [class.is-invalid]="validEmail">
+             <small  *ngIf="validEmail"
+             class="from-text text-danger">Correo inválido
+    </small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Usuario</label>
+    <div class="col-8">
+
+      <input class="form-control"
+             type="text"
+             placeholder="Ingrese su suario"
+             formControlName="user"
+             [class.is-invalid]="userNotValid">
+             <small  *ngIf="userNotValid"
+             class="from-text text-danger">Esté usuario no esta disponible
+    </small>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="form-row col">
+      <input type="text"
+              class="form-control"
+              formControlName="pass1"
+              placeholder="Contrasñe"
+              [class.is-invalid]="passOne"
+              >
+            
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Confirmar Contraseña</label>
+    <div class="form-row col">
+      <input type="text"
+              class="form-control"
+              formControlName="pass2"
+              placeholder="Confirmar contrasñe"
+              [class.is-invalid]="passwordTowInvalid"
+              >
+    </div>
+  </div>
+
+
+  <div class="form-group row" formGroupName="address">
+    <label class="col-2 col-form-label">Dirección</label>
+    <div class="form-row col">
+
+      <div class="col">
+        <input type="text"
+                class="form-control"
+                placeholder="city"
+                formControlName="city"
+                [class.is-invalid]="validCity">
+      </div>
+
+      <div class="col">
+        <input type="text"
+                class="form-control"
+                placeholder="sector"
+                formControlName="sector"
+                [class.is-invalid]="validSector">
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th>Psatiempo</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="hobbies">
+          <tr *ngFor="let control of hobbies.controls; let i = index">
+            <td>{{i + 1}}</td>
+            <td>
+              <input  type="text" 
+                      class="form-control"
+                      [formControlName]="i">
+            </td>
+            <td>
+              <button class="btn btn-danger"
+                      type="button"
+                      (click)="removeControl(i)">Borrar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-warning btn-block my-3"
+              type="button"
+              (click)="addFormControl()">+Agregar</button>
     </div>
   </div>
 
@@ -48,3 +158,12 @@
   </div>
 
 </form>
+
+<hr>
+<pre>
+  Estado del formulario: {{ formReactive.valid }}
+  Status: {{ formReactive.status }}
+</pre>
+<pre>
+  {{ formReactive.value | json }}
+</pre>

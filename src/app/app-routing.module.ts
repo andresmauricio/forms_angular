@@ -7,7 +7,7 @@ import { ReactiveComponent } from './components/reactive/reactive.component';
 const routes: Routes = [
   {path: 'templeate', component: TempleateComponent},
   {path: 'reactive', component: ReactiveComponent},
-  {path: '', pathMatch: 'full', redirectTo: 'templeate'},
+  {path: '', pathMatch: 'full', redirectTo: 'reactive'},
 ];
 
 @NgModule({
